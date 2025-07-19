@@ -1,4 +1,5 @@
 'use client'
+import { useEffect } from 'react'
 import BrowsingHistoryList from '@/components/shared/browsing-history-list'
 import ProductPrice from '@/components/shared/product/product-price'
 import { buttonVariants } from '@/components/ui/button'
@@ -11,6 +12,7 @@ import { notFound } from 'next/navigation'
 import useCartStore from '@/hooks/use-cart-store'
 import useSettingStore from '@/hooks/use-setting-store'
 import { useTranslations } from 'next-intl'
+import { useRouter } from 'next/navigation'
 
 export default function CartAddItem({ itemId }: { itemId: string }) {
   const {
@@ -24,6 +26,16 @@ export default function CartAddItem({ itemId }: { itemId: string }) {
   const item = items.find((x) => x.clientId === itemId)
 
   const t = useTranslations()
+
+  const router = useRouter();
+
+// useEffect(() => {
+  if (!item) {
+   return router.back();
+  }
+// }, [item]);
+
+
   if (!item) return notFound()
   return (
     <div>
