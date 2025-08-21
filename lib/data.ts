@@ -1,7 +1,7 @@
-import { Data, IProductInput, IUserInput } from '@/types'
-import { toSlug } from './utils'
-import bcrypt from 'bcryptjs'
-import { i18n } from '@/i18n-config'
+import { Data, IProductInput, IUserInput } from '@/types';
+import { toSlug } from './utils';
+import bcrypt from 'bcryptjs';
+import { i18n } from '@/i18n-config';
 
 const users: IUserInput[] = [
   {
@@ -259,7 +259,9 @@ const users: IUserInput[] = [
     paymentMethod: 'PayPal',
     emailVerified: false,
   },
-]
+];
+
+// ['T-Shirts', 'Jeans', 'Wrist Watches', 'Shoes'];
 
 const products: IProductInput[] = [
   {
@@ -965,7 +967,7 @@ const products: IProductInput[] = [
 
     reviews: [],
   },
-]
+];
 const reviews = [
   {
     rating: 1,
@@ -1057,7 +1059,7 @@ const reviews = [
     comment:
       "Love this product! It's durable, stylish, and works great. Would buy again without hesitation.",
   },
-]
+];
 
 const data: Data = {
   users,
@@ -1331,4 +1333,4 @@ We also provide helpful resources such as order tracking, product guides, and FA
   ],
 };
 
-export default data
+export default data;

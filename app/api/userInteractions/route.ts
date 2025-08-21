@@ -24,9 +24,13 @@ export const POST = async (request: NextRequest) => {
       interactionType,
       value,
       reviewStars,
+      category,
       sessionId,
       searchQuery,
     } = parsed.data;
+
+
+    console.log("fffffffffffffffffffffffffff",category);
 
     await connectToDatabase();
 
@@ -45,21 +49,37 @@ export const POST = async (request: NextRequest) => {
     // Handle different interaction types
     let updatedInteraction;
     if (existingInteraction) {
-      // If it's a cart or purchase, update quantity/value
-      if (interactionType === 'add_to_cart' || interactionType === 'purchase') {
-        // If value is provided, increment or set
-        if (typeof value === 'number') {
+      // If the existing interaction is a purchase, do not modify interactionType.
+      if (existingInteraction.interactionType === 'purchase') {
+        // Only allow appending value if new interaction is also a purchase
+        if (interactionType === 'purchase' && typeof value === 'number') {
           existingInteraction.value = (existingInteraction.value || 0) + value;
         }
+        // Only update reviewStars if new interaction is also a purchase and reviewStars is provided
+        if (interactionType === 'purchase' && typeof reviewStars === 'number') {
+          existingInteraction.reviewStars = reviewStars;
+        }
+        // Optionally update sessionId and searchQuery
+        if (sessionId) existingInteraction.sessionId = sessionId;
+        if (searchQuery) existingInteraction.searchQuery = searchQuery;
+        // Do not change interactionType
+      } else {
+        // If existing interaction is 'view' or 'add_to_cart', allow modification
+        if (interactionType === 'view') {
+          existingInteraction.value = 0;
+        } else if (typeof value === 'number') {
+          existingInteraction.value = value;
+          // existingInteraction.category = category;
+        }
+        // Only update reviewStars if new interaction is a purchase
+        if (interactionType === 'purchase' && typeof reviewStars === 'number') {
+          existingInteraction.reviewStars = reviewStars;
+        }
+        // Update interactionType to the new one
+        existingInteraction.interactionType = interactionType;
+        if (sessionId) existingInteraction.sessionId = sessionId;
+        if (searchQuery) existingInteraction.searchQuery = searchQuery;
       }
-      // If it's a review, update reviewStars
-      if (interactionType === 'review' && typeof reviewStars === 'number') {
-        existingInteraction.reviewStars = reviewStars;
-      }
-      // Update interactionType if changed
-      existingInteraction.interactionType = interactionType;
-      if (sessionId) existingInteraction.sessionId = sessionId;
-      if (searchQuery) existingInteraction.searchQuery = searchQuery;
       updatedInteraction = await existingInteraction.save();
     } else {
       // Create new interaction
@@ -70,11 +90,14 @@ export const POST = async (request: NextRequest) => {
         value:
           interactionType === 'add_to_cart' || interactionType === 'purchase'
             ? value || 1
-            : undefined,
-        reviewStars: interactionType === 'review' ? reviewStars : undefined,
+            : 0,
+        reviewStars: interactionType === 'purchase' ? reviewStars : undefined,
+        category,
         sessionId,
         searchQuery,
       };
+
+      
       updatedInteraction = await UserInteractions.create(newInteraction);
     }
 

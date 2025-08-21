@@ -17,6 +17,7 @@ import {
   UserSignUpSchema,
   WebPageInputSchema,
   UserInteractionInputSchema,
+  PurchaseTrackerInputSchema
 } from '@/lib/validator'
 import { z } from 'zod'
 
@@ -88,3 +89,4 @@ export type DeliveryDate = z.infer<typeof DeliveryDateSchema>
 
 // user interaction
 export type UserInteraction = z.infer<typeof UserInteractionInputSchema>
+export type PurchaseInteraction = z.infer<typeof PurchaseTrackerInputSchema>

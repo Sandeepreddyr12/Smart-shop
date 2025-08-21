@@ -58,6 +58,7 @@ const productSchema = new Schema<IProduct>(
     },
     ratingDistribution: [
       {
+        _id : false,
         rating: {
           type: Number,
           required: true,
