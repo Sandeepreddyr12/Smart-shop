@@ -29,14 +29,11 @@ const userInteractionSchema = new Schema<IUserInteraction>(
     interactionType: {
       type: String,
       required: true,
-      enum: [
-        'view',
-        'add_to_cart',
-        'purchase'
-      ],
+      enum: ['view', 'add_to_cart', 'purchase'],
     },
     value: { type: Number }, // for things like quantity, etc.
     reviewStars: { type: Number, min: 0, max: 5, default: 0 },
+    category: { type: String },
     sessionId: { type: String },
     searchQuery: { type: String },
   },
