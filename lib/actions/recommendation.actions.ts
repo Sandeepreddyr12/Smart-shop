@@ -1,30 +1,22 @@
 'use server';
 
+import { IProduct } from '../db/models/product.model';
 import { formatError } from '../utils';
 
 // Types for recommendation responses
-export interface RecommendationProduct {
-  id: string;
-  name: string;
-  price: number;
-  description?: string;
-  image?: string;
-  category?: string;
-  rating?: number;
-  numReviews?: number;
-  [key: string]: string | number | boolean | undefined; // Allow additional properties with specific types
+export interface RecommendationProduct extends IProduct{
+  score : number
 }
 
 export interface RecommendationResponse {
   recommendations: RecommendationProduct[];
-  user_id: string;
-  product_id?: string;
-  n_recommendations: number;
+  success: string;
+  message?: string;
 }
 
 // Configuration
 const RECOMMENDATION_API_BASE_URL =
-  process.env.RECOMMENDATION_API_URL || 'http://localhost:8000';
+  process.env.RECOMMENDATION_API_URL || 'http://127.0.0.1:8000';
 
 /**
  * Get user recommendations from FastAPI endpoint
@@ -34,14 +26,14 @@ const RECOMMENDATION_API_BASE_URL =
  */
 export async function getUserRecommendations(
   user_id: string,
-  n_recommendations: number = 10
+  // n_recommendations: number = 10
 ): Promise<{
   success: boolean;
   data?: RecommendationProduct[];
   message?: string;
 }> {
   try {
-    const url = `${RECOMMENDATION_API_BASE_URL}/recommendations/${user_id}?n_recommendations=${n_recommendations}`;
+    const url = `${RECOMMENDATION_API_BASE_URL}/api/v1/recommendations/${user_id}`;
 
     const response = await fetch(url, {
       method: 'GET',
@@ -60,7 +52,7 @@ export async function getUserRecommendations(
 
     return {
       success: true,
-      data: data as RecommendationProduct[],
+      data: JSON.parse(JSON.stringify(data as RecommendationProduct[])),
     };
   } catch (error) {
     return {
@@ -80,14 +72,14 @@ export async function getUserRecommendations(
 export async function getProductRecommendations(
   user_id: string,
   product_id: string,
-  n_recommendations: number = 10
+  // n_recommendations: number = 10
 ): Promise<{
   success: boolean;
-  data?: RecommendationResponse;
+  data?: RecommendationProduct[];
   message?: string;
 }> {
   try {
-    const url = `${RECOMMENDATION_API_BASE_URL}/recommendations/${user_id}/${product_id}?n_recommendations=${n_recommendations}`;
+    const url = `${RECOMMENDATION_API_BASE_URL}/api/v1/recommendations/${user_id}/${product_id}`;
 
     const response = await fetch(url, {
       method: 'GET',
@@ -106,7 +98,7 @@ export async function getProductRecommendations(
 
     return {
       success: true,
-      data: data as RecommendationResponse,
+      data: JSON.parse(JSON.stringify(data as RecommendationProduct[])),
     };
   } catch (error) {
     return {
@@ -127,20 +119,20 @@ export async function getProductRecommendations(
 export async function getRecommendationsWithAuth(
   user_id: string,
   product_id?: string,
-  n_recommendations: number = 10,
+  // n_recommendations: number = 10,
   authToken?: string
 ): Promise<{
   success: boolean;
-  data?: RecommendationProduct[] | RecommendationResponse;
+  data?: RecommendationProduct[];
   message?: string;
 }> {
   try {
     let url: string;
 
     if (product_id) {
-      url = `${RECOMMENDATION_API_BASE_URL}/recommendations/${user_id}/${product_id}?n_recommendations=${n_recommendations}`;
+      url = `${RECOMMENDATION_API_BASE_URL}/api/v1/recommendations/${user_id}/${product_id}`;
     } else {
-      url = `${RECOMMENDATION_API_BASE_URL}/recommendations/${user_id}?n_recommendations=${n_recommendations}`;
+      url = `${RECOMMENDATION_API_BASE_URL}/api/v1/recommendations/${user_id}`;
     }
 
     const headers: Record<string, string> = {
@@ -166,7 +158,7 @@ export async function getRecommendationsWithAuth(
 
     return {
       success: true,
-      data: data,
+      data: JSON.parse(JSON.stringify(data as RecommendationProduct[])),
     };
   } catch (error) {
     return {
