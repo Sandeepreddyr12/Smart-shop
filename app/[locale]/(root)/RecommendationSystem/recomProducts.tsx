@@ -32,7 +32,7 @@ function ProductCard({ product }: { product: RecommendationProduct }) {
   const t = useTranslations('Product');
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-5  ">
+    <div className="grid grid-cols-1 md:grid-cols-5 animate-in slide-in-from-top-2 duration-500 ease-out">
       <div className="col-span-2">
         <ProductGallery images={product.images} />
       </div>
@@ -154,11 +154,13 @@ function RecomProducts({ userId = 'newUser', ProductId }: RecomProductsProps) {
   return (
     <div>
       {selectedProduct && (
-        <div className="mb-6">
-          <ProductCard product={selectedProduct} />
+        <div className="mb-6 animate-in fade-in-0 slide-in-from-top-4 duration-700 ease-out">
+          <div className="bg-white rounded-lg shadow-lg border border-gray-100 p-6 transform transition-all duration-300 hover:shadow-xl">
+            <ProductCard product={selectedProduct} />
+          </div>
         </div>
       )}
-      {card}
+      <div className="animate-in fade-in-0 duration-500 ease-out">{card}</div>
     </div>
   );
 }

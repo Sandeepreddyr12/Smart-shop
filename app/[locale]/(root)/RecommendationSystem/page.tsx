@@ -134,14 +134,9 @@ function NewUser() {
 
 
 function UserBased() {
-  const [userId, setUserId] = useState<string>('newUser');
+  const [userId, setUserId] = useState<number>(1);
   
-  const canFetch = useMemo(() => {
-    const idNum = Number(userId);
-    return Number.isInteger(idNum) && idNum >= 0 && idNum <= 199;
-  }, [userId]);
 
-  
 
   return (
     <div className=" mx-auto">
@@ -150,18 +145,18 @@ function UserBased() {
           Find Recommendations
         </h2>
         <p className="text-gray-600 mb-6">
-          Enter a user ID from 0 to 199 to see personalized suggestions based on
+          Enter a user ID from 1 to 200 to see personalized suggestions based on
           their activity.
         </p>
       </div>
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
         <input
           type="number"
-          min={0}
-          max={199}
+          min={1}
+          max={200}
           placeholder="Enter User ID (e.g., 42)"
           value={userId}
-          onChange={(e) => setUserId(e.target.value)}
+          onChange={(e) => setUserId(+e.target.value)}
           className="w-full sm:w-64 px-4 py-3 text-center bg-gray-100 border-2 border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
         />
         <button
@@ -177,7 +172,7 @@ function UserBased() {
         {/* {error} */}
         error
       </div>
-     <RecomProducts userId = {userId}  />
+     <RecomProducts userId = {'user_'+ (userId - 1)}  />
     </div>
   );
 }
