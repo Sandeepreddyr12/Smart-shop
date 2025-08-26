@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import {
   // getUserRecommendations,
   // getProductRecommendations,
@@ -88,17 +88,15 @@ function RecomProducts({ userId = 'newUser', ProductId }: RecomProductsProps) {
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] =
     useState<RecommendationProduct | null>(null);
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const selectedProductId = selectedProduct?._id || ProductId;
 
-  useEffect(() => {
-    const fetchRecommendations = async () => {
+  const fetchRecommendations = useCallback(
+    async (uid: string, pid?: string) => {
       try {
         setLoading(true);
-        const result = await getRecommendationsWithAuth(
-          userId,
-          selectedProductId
-        );
+        const result = await getRecommendationsWithAuth(uid, pid);
         setRecomProducts(result);
       } catch (error) {
         console.error('Error fetching recommendations:', error);
@@ -106,14 +104,34 @@ function RecomProducts({ userId = 'newUser', ProductId }: RecomProductsProps) {
       } finally {
         setLoading(false);
       }
+    },
+    []
+  );
+
+  useEffect(() => {
+    // Clear any existing timer
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    // Set a new timer to debounce the API call
+    const timer = setTimeout(() => {
+      fetchRecommendations(userId, selectedProductId);
+    }, 300); // 300ms debounce delay
+
+    debounceTimerRef.current = timer;
+
+    // Cleanup function to clear timer on unmount
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
     };
+  }, [userId, selectedProductId, fetchRecommendations]);
 
-    fetchRecommendations();
-  }, [userId, selectedProductId]);
-
-  const handleProductSelect = (product: RecommendationProduct) => {
+  const handleProductSelect = useCallback((product: RecommendationProduct) => {
     setSelectedProduct(product);
-  };
+  }, []);
 
   const card = loading ? (
     <Card className="w-full rounded-none">
