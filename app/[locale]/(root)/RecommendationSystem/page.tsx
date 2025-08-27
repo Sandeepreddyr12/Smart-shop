@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import RecomProducts from './recomProducts';
 
 
@@ -149,7 +149,7 @@ function UserBased() {
           their activity.
         </p>
       </div>
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10">
         <input
           type="number"
           min={1}
@@ -157,22 +157,13 @@ function UserBased() {
           placeholder="Enter User ID (e.g., 42)"
           value={userId}
           onChange={(e) => setUserId(+e.target.value)}
-          className="w-full sm:w-64 px-4 py-3 text-center bg-gray-100 border-2 border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+          className="w-full sm:w-64 px-3 py-3 text-center bg-gray-300 font-bold text-blue-900 border-2 border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
         />
-        <button
-        //   onClick={fetchRecommendations}
-          // disabled={!canFetch || loading}
-          className="w-full sm:w-auto bg-blue-600 disabled:bg-blue-300 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-transform transform hover:scale-105"
-        >
-          {/* {loading ? 'Fetching…' : 'Fetch Results'} */}
-          fetch
-        </button>
       </div>
-      <div className="mt-6 min-h-6 text-center text-sm text-red-500">
-        {/* {error} */}
-        error
-      </div>
-     <RecomProducts userId = {'user_'+ (userId - 1)}  />
+      <p className="text-gray-600 mb-6 text-center">
+      Now you are using userId <b>{userId}</b>. The recommendation model has been trained using data from 200 users.
+      </p>
+      <RecomProducts userId={'user_' + (userId - 1)} />
     </div>
   );
 }

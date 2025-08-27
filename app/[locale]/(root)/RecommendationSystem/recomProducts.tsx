@@ -16,6 +16,7 @@ import RatingSummary from '@/components/shared/product/rating-summary';
 import { Separator } from '@/components/ui/separator';
 import ProductPrice from '@/components/shared/product/product-price';
 import SelectVariant from '@/components/shared/product/select-variant';
+import Spinner from '@/components/shared/header/spinner';
 
 interface RecomProductsProps {
   userId?: string;
@@ -135,8 +136,10 @@ function RecomProducts({ userId = 'newUser', ProductId }: RecomProductsProps) {
 
   const card = loading ? (
     <Card className="w-full rounded-none">
-      <CardContent className="p-4 items-center gap-3">
-        <div className="text-center">Loading recommendations...</div>
+      <CardContent className="h-36">
+        <div className="h-full flex items-center justify-center">
+          <Spinner />
+        </div>
       </CardContent>
     </Card>
   ) : (
