@@ -307,9 +307,21 @@ export const SettingInputSchema = z.object({
 export const UserInteractionInputSchema = z.object({
   userId: MongoId,
   productId: MongoId,
-  interactionType: z.enum(['view', 'add_to_cart', 'purchase', 'review']),
+  interactionType: z.enum(['view', 'add_to_cart', 'purchase']), 
   reviewStars: z.coerce.number().min(0, 'Review stars must be at least 0').max(5, 'Review stars must be at most 5').default(0).optional(),
   value: z.number().optional(),
+  category : z.string().optional(),
   sessionId: z.string().optional(),
   searchQuery: z.string().optional(),
 })
+
+
+export const PurchaseTrackerInputSchema = z.object({
+  userId: z.string(),
+  products: z.array(
+    z.object({
+      productID: z.string(),
+      value: z.number().optional(),
+    })
+  ),
+});
