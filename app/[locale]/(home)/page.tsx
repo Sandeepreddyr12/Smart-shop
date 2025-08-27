@@ -9,6 +9,10 @@ import {
   getProductsByTag,
   getAllCategories,
 } from '@/lib/actions/product.actions'
+import {
+  getRecommendationsWithAuth,
+  // getUserRecommendations,
+} from '@/lib/actions/recommendation.actions';
 import { getSetting } from '@/lib/actions/setting.actions'
 import { toSlug } from '@/lib/utils'
 import { getTranslations } from 'next-intl/server'
@@ -18,6 +22,7 @@ export default async function HomePage() {
   const { carousels } = await getSetting()
   const todaysDeals = await getProductsByTag({ tag: 'todays-deal' })
   const bestSellingProducts = await getProductsByTag({ tag: 'best-seller' })
+  const recomProducts = await getRecommendationsWithAuth('user_0');
 
   const categories = (await getAllCategories()).slice(0, 4)
   const newArrivals = await getProductsForCard({
@@ -68,6 +73,8 @@ export default async function HomePage() {
     },
   ]
 
+  // console.log("🔻🎉↔",recomProducts);
+
   return (
     <>
       <HomeCarousel items={carousels} />
@@ -93,8 +100,7 @@ export default async function HomePage() {
         <CardContent className="p-4 items-center gap-3">
           <ProductSlider
             title={t('Curated For You')}
-            products={bestSellingProducts}
-            hideDetails
+            products={recomProducts.data ?? []}
           />
         </CardContent>
       </Card>
