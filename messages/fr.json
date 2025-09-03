@@ -31,7 +31,8 @@
     "Help": "Aide",
     "Site Menu": "Menu du site",
     "Subtotal": "Sous-total",
-    "Go to cart": "Aller au panier"
+    "Go to cart": "Aller au panier",
+    "Recomendation System": "Système de recommandation"
   },
   "Home": {
     "Categories to explore": "Catégories à explorer",
@@ -100,7 +101,8 @@
     "Loading": "Chargement...",
     "Rating": "Évaluation",
     "No reviews yet": "Pas encore d'avis",
-    "Submitting": "Envoi en cours..."
+    "Submitting": "Envoi en cours...",
+    "Recommended for you" : "Recommandé pour vous"
   },
   "Cart": {
     "Shopping Cart": "Panier d'achat",

@@ -31,7 +31,8 @@
     "Help": "مساعدة",
     "Site Menu": "قائمة الموقع",
     "Subtotal": "المجموع الفرعي",
-    "Go to cart": "اذهب إلى السلة"
+    "Go to cart": "اذهب إلى السلة",
+    "Recomendation System": "نظام التوصية"
   },
   "Home": {
     "Categories to explore": "فئات للاستكشاف",
@@ -100,7 +101,8 @@
     "Loading": "جاري التحميل...",
     "Rating": "التقييم",
     "No reviews yet": "لا توجد مراجعات حتى الآن",
-    "Submitting": "جاري الإرسال..."
+    "Submitting": "جاري الإرسال...",
+    "Recommended for you": "موصى به لك"
   },
   "Cart": {
     "Shopping Cart": "عربة التسوق",

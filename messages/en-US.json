@@ -31,7 +31,8 @@
     "Help": "Help",
     "Site Menu": "Site Menu",
     "Subtotal": "Subtotal",
-    "Go to cart": "Go to cart"
+    "Go to cart": "Go to cart",
+    "Recomendation System": "Recomendation System"
   },
   "Home": {
     "Categories to explore": "Categories to explore",
@@ -100,7 +101,8 @@
     "Loading": "Loading...",
     "Rating": "Rating",
     "No reviews yet": "No reviews yet",
-    "Submitting": "Submitting..."
+    "Submitting": "Submitting...",
+    "Recommended for you" : "Recommended for you"
   },
   "Cart": {
     "Shopping Cart": "Shopping Cart",
