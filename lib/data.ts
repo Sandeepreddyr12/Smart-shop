@@ -1,7 +1,7 @@
-import { Data, IProductInput, IUserInput } from '@/types'
-import { toSlug } from './utils'
-import bcrypt from 'bcryptjs'
-import { i18n } from '@/i18n-config'
+import { Data, IProductInput, IUserInput } from '@/types';
+import { toSlug } from './utils';
+import bcrypt from 'bcryptjs';
+import { i18n } from '@/i18n-config';
 
 const users: IUserInput[] = [
   {
@@ -259,7 +259,9 @@ const users: IUserInput[] = [
     paymentMethod: 'PayPal',
     emailVerified: false,
   },
-]
+];
+
+// ['T-Shirts', 'Jeans', 'Wrist Watches', 'Shoes'];
 
 const products: IProductInput[] = [
   {
@@ -965,7 +967,7 @@ const products: IProductInput[] = [
 
     reviews: [],
   },
-]
+];
 const reviews = [
   {
     rating: 1,
@@ -1057,7 +1059,7 @@ const reviews = [
     comment:
       "Love this product! It's durable, stylish, and works great. Would buy again without hesitation.",
   },
-]
+];
 
 const data: Data = {
   users,
@@ -1201,22 +1203,28 @@ We also provide helpful resources such as order tracking, product guides, and FA
       name: 'Best Sellers',
       href: '/search?tag=best-seller',
     },
+
+    {
+      name: 'Recomendation System',
+      href: '/RecommendationSystem',
+    },
+
     {
       name: 'Browsing History',
       href: '/#browsing-history',
     },
-    {
-      name: 'Customer Service',
-      href: '/page/customer-service',
-    },
-    {
-      name: 'About Us',
-      href: '/page/about-us',
-    },
-    {
-      name: 'Help',
-      href: '/page/help',
-    },
+    // {
+    //   name: 'Customer Service',
+    //   href: '/page/customer-service',
+    // },
+    // {
+    //   name: 'About Us',
+    //   href: '/page/about-us',
+    // },
+    // {
+    //   name: 'Help',
+    //   href: '/page/help',
+    // },
   ],
   carousels: [
     {
@@ -1247,24 +1255,30 @@ We also provide helpful resources such as order tracking, product guides, and FA
         freeShippingMinPrice: 35,
         isMaintenanceMode: false,
         defaultTheme: 'Light',
-        defaultColor: 'Gold',
+        defaultColor: 'Green',
         pageSize: 9,
       },
       site: {
         name: 'Smart-Shop',
         description:
           'Smart-Shop is a sample Ecommerce website built with Next.js, Tailwind CSS, and MongoDB.',
-        keywords: 'Next Ecommerce, Next.js, Tailwind CSS, MongoDB',
+        keywords: 'Next Ecommerce, Next.js, Tailwind CSS, MongoDB, ML models',
         url: 'https://next-mongo-ecommerce-final.vercel.app',
-        logo: '/icons/logo.svg',
+        logo: '/icons/logo.png',
         slogan: 'Spend less, enjoy more.',
-        author: 'Next Ecommerce',
-        copyright: '2000-2024, Smart-Shop.com, Inc. or its affiliates',
+        author: 'Smart shop',
+        copyright: '2000-2025, Smart-Shop.com, Inc. or its affiliates',
         email: 'admin@example.com',
         address: '123, Main Street, Anytown, CA, Zip 12345',
         phone: '+1 (123) 456-7890',
       },
       carousels: [
+        {
+          title: 'Best Deals on Wrist Watches',
+          buttonCaption: 'See More',
+          image: '/images/banner2.jpg',
+          url: '/search?category=Wrist Watches',
+        },
         {
           title: 'Most Popular Shoes For Sale',
           buttonCaption: 'Shop Now',
@@ -1276,12 +1290,6 @@ We also provide helpful resources such as order tracking, product guides, and FA
           buttonCaption: 'Shop Now',
           image: '/images/banner1.jpg',
           url: '/search?category=T-Shirts',
-        },
-        {
-          title: 'Best Deals on Wrist Watches',
-          buttonCaption: 'See More',
-          image: '/images/banner2.jpg',
-          url: '/search?category=Wrist Watches',
         },
       ],
       availableLanguages: i18n.locales.map((locale) => ({
@@ -1296,8 +1304,8 @@ We also provide helpful resources such as order tracking, product guides, and FA
           symbol: '$',
           convertRate: 1,
         },
+        { name: 'INDIAN Rupee', code: 'INR', symbol: '₹', convertRate: 30 },
         { name: 'Euro', code: 'EUR', symbol: '€', convertRate: 0.96 },
-        { name: 'UAE Dirham', code: 'AED', symbol: 'AED', convertRate: 3.67 },
       ],
       defaultCurrency: 'USD',
       availablePaymentMethods: [
@@ -1331,4 +1339,4 @@ We also provide helpful resources such as order tracking, product guides, and FA
   ],
 };
 
-export default data
+export default data;
