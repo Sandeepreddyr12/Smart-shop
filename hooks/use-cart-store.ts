@@ -28,9 +28,9 @@ async function trackCartInteraction(
         sessionId,
       }),
     });
-    // if (!res.ok) {
-    //   throw new Error('Failed to track cart interaction');
-    // }
+    if (!res.ok) {
+      throw new Error('Failed to track cart interaction');
+    }
     return await res.json();
   } catch (err) {
     console.error('Failed to track cart interaction', err);

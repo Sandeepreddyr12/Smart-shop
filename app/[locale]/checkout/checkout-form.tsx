@@ -33,12 +33,14 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import CheckoutFooter from './checkout-footer'
-import { ShippingAddress } from '@/types'
+import { ShippingAddress, PurchaseInteraction } from '@/types'
 import useIsMounted from '@/hooks/use-is-mounted'
 import Link from 'next/link'
 import useCartStore from '@/hooks/use-cart-store'
 import useSettingStore from '@/hooks/use-setting-store'
 import ProductPrice from '@/components/shared/product/product-price'
+import { useSession } from 'next-auth/react'
+import { useProductPurchase } from '@/hooks/use-user-interactions'
 
 const shippingAddressDefaultValues =
   process.env.NODE_ENV === 'development'
@@ -93,6 +95,9 @@ const CheckoutForm = () => {
   } = useCartStore()
   const isMounted = useIsMounted()
 
+  const {data} = useSession();
+  const {trackPurchase} = useProductPurchase();
+
   const shippingAddressForm = useForm<ShippingAddress>({
     resolver: zodResolver(ShippingAddressSchema),
     defaultValues: shippingAddress || shippingAddressDefaultValues,
@@ -119,6 +124,11 @@ const CheckoutForm = () => {
   const [isDeliveryDateSelected, setIsDeliveryDateSelected] =
     useState<boolean>(false)
 
+    const trackproducts: PurchaseInteraction['products'] = items.map(x => ({
+      productID: x.product,
+      value: x.quantity,
+    }));
+
   const handlePlaceOrder = async () => {
     const res = await createOrder({
       items,
@@ -143,8 +153,10 @@ const CheckoutForm = () => {
         description: res.message,
         variant: 'default',
       })
-      clearCart()
+      clearCart(data?.user?.id);
+      trackPurchase(data?.user?.id, trackproducts);
       router.push(`/checkout/${res.data?.orderId}`)
+
     }
   }
   const handleSelectPaymentMethod = () => {
@@ -585,8 +597,12 @@ const CheckoutForm = () => {
                               <Select
                                 value={item.quantity.toString()}
                                 onValueChange={(value) => {
-                                  if (value === '0') removeItem(item)
-                                  else updateItem(item, Number(value))
+                                  if (value === '0') removeItem(data?.user?.id, item);
+                                  else updateItem(
+                                    data?.user?.id,
+                                    item,
+                                    Number(value)
+                                  );
                                 }}
                               >
                                 <SelectTrigger className='w-24'>
