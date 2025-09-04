@@ -30,7 +30,7 @@ export const POST = async (request: NextRequest) => {
     } = parsed.data;
 
 
-    console.log("fffffffffffffffffffffffffff",category);
+    // console.log("fffffffffffffffffffffffffff",category);
 
     await connectToDatabase();
 

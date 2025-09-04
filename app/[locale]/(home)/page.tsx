@@ -22,7 +22,7 @@ export default async function HomePage() {
   const { carousels } = await getSetting()
   const todaysDeals = await getProductsByTag({ tag: 'todays-deal' })
   const bestSellingProducts = await getProductsByTag({ tag: 'best-seller' })
-  const recomProducts = await getRecommendationsWithAuth('user_0');
+  const recomProducts = await getRecommendationsWithAuth('newUser');
 
   const categories = (await getAllCategories()).slice(0, 4)
   const newArrivals = await getProductsForCard({
@@ -82,6 +82,14 @@ export default async function HomePage() {
         <HomeCard cards={cards} />
         <Card className="w-full rounded-none">
           <CardContent className="p-4 items-center gap-3">
+            <ProductSlider
+              title={t('Curated For You')}
+              products={recomProducts.data ?? []}
+            />
+          </CardContent>
+        </Card>
+        <Card className="w-full rounded-none">
+          <CardContent className="p-4 items-center gap-3">
             <ProductSlider title={t("Today's Deals")} products={todaysDeals} />
           </CardContent>
         </Card>
@@ -95,16 +103,6 @@ export default async function HomePage() {
           </CardContent>
         </Card>
       </div>
-
-      <Card className="w-full rounded-none">
-        <CardContent className="p-4 items-center gap-3">
-          <ProductSlider
-            title={t('Curated For You')}
-            products={recomProducts.data ?? []}
-          />
-        </CardContent>
-      </Card>
-
       <div className="p-4 bg-background">
         <BrowsingHistoryList />
       </div>
