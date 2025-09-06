@@ -239,8 +239,9 @@ const useCartStore = create(
           },
         });
       },
-      clearCart: (userId: string|undefined) => {
-        // Track removal for each item before clearing
+      // clearCart: (userId: string|undefined) => {
+      clearCart: () => {
+      // Track removal for each item before clearing
         // const { items } = get().cart;
         // const sessionId = ''; // TODO: Replace with actual session id
         // Promise.all(
