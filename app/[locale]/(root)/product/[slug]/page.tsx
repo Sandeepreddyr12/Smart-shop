@@ -186,7 +186,7 @@ export default async function ProductDetails(props: {
         <ReviewList product={product} userId={session?.user.id} />
       </section>
       <section>
-        {true ? (
+        {recomProducts.success ? (
           <ProductSlider
             title={t('Product.Recommended for you')}
             products={recomProducts.data || []}
