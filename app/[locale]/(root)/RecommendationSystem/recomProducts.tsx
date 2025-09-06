@@ -109,6 +109,8 @@ function RecomProducts({ userId = 'newUser', ProductId }: RecomProductsProps) {
     []
   );
 
+  console.log("🔻🎉↔",recomProducts);
+
   useEffect(() => {
     // Clear any existing timer
     if (debounceTimerRef.current) {
@@ -145,11 +147,51 @@ function RecomProducts({ userId = 'newUser', ProductId }: RecomProductsProps) {
   ) : (
     <Card className="w-full rounded-none">
       <CardContent className="p-4 items-center gap-3">
-        <ProductSlider
-          title={t('Curated For You')}
-          products={recomProducts.data ?? []}
-          onProductClick={handleProductSelect}
-        />
+        {recomProducts.success ? (
+          <ProductSlider
+            title={t('Curated For You')}
+            products={recomProducts.data || []}
+            onProductClick={handleProductSelect}
+          />
+        ) : (
+          <div className="w-full text-center py-8">
+            <div className="max-w-md mx-auto">
+              <h3 className="text-lg font-semibold mb-2">
+                {t('Curated For You')}
+              </h3>
+              <div className="bg-muted/50 rounded-lg p-6 border border-dashed">
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                    <svg
+                      className="w-6 h-6 text-primary"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13 10V3L4 14h7v7l9-11h-7z"
+                      />
+                    </svg>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Products displayed here are powered by our ML
+                      recommendation API
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      The API is deployed on a free tier, which may cause slow
+                      loading and cold starts. Please wait a couple of minutes
+                      for the recommendation system to warm up.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
