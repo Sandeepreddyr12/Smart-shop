@@ -1,14 +1,19 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { Cart, OrderItem, ShippingAddress, type UserInteraction } from '@/types';
+import {
+  Cart,
+  OrderItem,
+  ShippingAddress,
+  type UserInteraction,
+} from '@/types';
 import { calcDeliveryDateAndPrice } from '@/lib/actions/order.actions';
 
 
 async function trackCartInteraction(
   userId: string | undefined,
   productId: string,
-  interactionType: "view" | "add_to_cart" | "purchase",
+  interactionType: 'view' | 'add_to_cart' | 'purchase',
   value: number = 0,
   category? : string,
   sessionId?: string

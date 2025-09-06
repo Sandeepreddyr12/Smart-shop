@@ -30,14 +30,43 @@ const ProductCard = ({
   hideAddToCart = false,
   onProductClick,
 }: {
-  product: IProduct
-  hideDetails?: boolean
-  hideBorder?: boolean
-  hideAddToCart?: boolean
+  product: IProduct;
+  hideDetails?: boolean;
+  hideBorder?: boolean;
+  hideAddToCart?: boolean;
+  onProductClick?: (product: IProduct) => void;
 }) => {
+  const { data: session } = useSession();
+  const { trackView } = useProductView();
+  // const { trackAddToCart } = useAddToCartInteraction();
+
+  const handleProductView = () => {
+    if (session?.user?.id) {
+      trackView(session.user.id, product._id, product.category);
+    }
+  };
+
+  // const handleAddToCartInteraction = () => {
+  //   if (session?.user?.id) {
+  //     trackAddToCart(session.user.id, product._id, 1);
+  //   }
+  // };
+
+  // console.log("product-card")
+
+  const handleNavigate = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    handleProductView();
+    if (onProductClick) {
+      e.preventDefault();
+      onProductClick(product);
+    }
+  };
+
   const ProductImage = () => (
-    <Link href={`/product/${product.slug}`}>
-      <div className='relative h-52'>
+    <Link href={`/product/${product.slug}`} onClick={handleNavigate}>
+      <div className="relative h-52">
         {product.images.length > 1 ? (
           <ImageHover
             src={product.images[0]}
@@ -63,7 +92,8 @@ const ProductCard = ({
       <p className="font-bold">{product.brand}</p>
       <Link
         href={`/product/${product.slug}`}
-        className='overflow-hidden text-ellipsis'
+        className="overflow-hidden text-ellipsis"
+        onClick={handleNavigate}
         style={{
           display: '-webkit-box',
           WebkitLineClamp: 2,
