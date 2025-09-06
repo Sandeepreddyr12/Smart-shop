@@ -1313,7 +1313,7 @@ We also provide helpful resources such as order tracking, product guides, and FA
         { name: 'Stripe', commission: 0 },
         { name: 'Cash On Delivery', commission: 0 },
       ],
-      defaultPaymentMethod: 'PayPal',
+      defaultPaymentMethod: 'Cash On Delivery',
       availableDeliveryDates: [
         {
           name: 'Tomorrow',
