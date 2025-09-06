@@ -41,7 +41,7 @@ export async function getUserRecommendations(
         'Content-Type': 'application/json',
       },
       // Add timeout for better error handling
-      signal: AbortSignal.timeout(10000), // 10 second timeout
+      // signal: AbortSignal.timeout(10000), // 10 second timeout
     });
 
     if (!response.ok) {
@@ -87,7 +87,7 @@ export async function getProductRecommendations(
         'Content-Type': 'application/json',
       },
       // Add timeout for better error handling
-      signal: AbortSignal.timeout(10000), // 10 second timeout
+      // signal: AbortSignal.timeout(10000), // 10 second timeout
     });
 
     if (!response.ok) {
@@ -147,7 +147,7 @@ export async function getRecommendationsWithAuth(
     const response = await fetch(url, {
       method: 'GET',
       headers,
-      signal: AbortSignal.timeout(10000), // 10 second timeout
+      // signal: AbortSignal.timeout(10000), // 10 second timeout
     });
 
     if (!response.ok) {
