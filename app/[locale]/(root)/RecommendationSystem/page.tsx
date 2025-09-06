@@ -122,7 +122,7 @@ function NewUser() {
           Welcome! Starting Your Journey
         </h2>
         <p className="text-gray-600">
-          Since you&apos;re new, we start by showing what&apos;s popular and
+          Since you&apos;re <b className='text-blue-600'>New</b>, we start by showing what&apos;s popular and
           trending. This helps you discover great products right away without
           any prior activity.
         </p>
