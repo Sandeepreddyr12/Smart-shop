@@ -27,15 +27,17 @@ export const useUserInteractions = (): UseUserInteractionsReturn => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to track interaction');
+
+        throw new Error('Failed to track interaction');
       }
 
       // Optional: You can handle successful tracking here
       // For example, update local state or trigger other actions
     } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : 'Failed to track interaction';
+      let errorMessage = 'An unknown error occurred';
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      }
       setError(errorMessage);
 
       // Show toast notification for user feedback
