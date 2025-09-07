@@ -1,10 +1,10 @@
 
-NEXT_PUBLIC_APP_NAME=Amazona
-NEXT_PUBLIC_APP_DESCRIPTION=An Amazon clone built with Next.js, MongoDB, Shadcn
+NEXT_PUBLIC_APP_NAME= Smart_shop
+NEXT_PUBLIC_APP_DESCRIPTION=A smart ecommerce built with Next.js, MongoDB, Shadcn, agents and ml models
 NEXT_PUBLIC_SERVER_URL=http://localhost:3000
 
 # Database
-MONGODB_URI=mongodb://localhost/nextjs-amazona
+MONGODB_URI=
  
 
 # $ npx auth secret
