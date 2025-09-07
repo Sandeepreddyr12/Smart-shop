@@ -382,7 +382,7 @@ export const calcDeliveryDateAndPriceForSeed = ({
   };
 };
 
-// main();
+main();
 
 // Function to export/download products collection from MongoDB (kept for manual use)
 export const exportProducts = async (outputFile = 'exported_products.json') => {
@@ -397,4 +397,4 @@ export const exportProducts = async (outputFile = 'exported_products.json') => {
   }
 };
 
-exportProducts();
+// exportProducts();

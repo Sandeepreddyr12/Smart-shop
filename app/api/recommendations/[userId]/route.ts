@@ -23,7 +23,9 @@ export async function GET(
     }
 
     return NextResponse.json({ recommendations: result.data ?? [] });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
+    // console.log(error)
     return NextResponse.json({ message: 'Unexpected error' }, { status: 500 });
   }
 }
