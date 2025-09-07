@@ -1,12 +1,12 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getUserRecommendations } from '@/lib/actions/recommendation.actions';
 
 export async function GET(
-  _request: Request,
-  { params }: { params: { userId: string } }
+  _request: NextRequest,
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
-    const userId = params.userId;
+    const { userId } = await params;
     if (!userId) {
       return NextResponse.json(
         { message: 'userId is required' },
@@ -23,7 +23,7 @@ export async function GET(
     }
 
     return NextResponse.json({ recommendations: result.data ?? [] });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     // console.log(error)
     return NextResponse.json({ message: 'Unexpected error' }, { status: 500 });
